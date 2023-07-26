@@ -1,6 +1,12 @@
-import { DataSource, DataSourceOptions } from 'typeorm';
+import { DataSource, DataSourceOptions, Repository } from 'typeorm';
 import path from 'node:path';
 import 'dotenv/config';
+import { User } from './entities/user.entity';
+import { Contact } from './entities/contact.entity';
+import { UserEmail } from './entities/userEmail.entity';
+import { UserPhone } from './entities/userPhone.entity';
+import { ContactEmail } from './entities/contactEmail.entity';
+import { ContactPhone } from './entities/contactPhone.entity';
 
 function DataSourceConfig(): DataSourceOptions {
 
@@ -21,16 +27,15 @@ function DataSourceConfig(): DataSourceOptions {
 
 const AppDataSource: DataSource = new DataSource(DataSourceConfig());
 
-// const userRepository
-// const contactRepository
-// const userEmailRepository
-// const userPhoneRepository
-// const contactEmailRepository
-// const contactPhoneRepository
-
+const userRepository: Repository<User> = AppDataSource.getRepository(User);
+const contactRepository: Repository<Contact> = AppDataSource.getRepository(Contact);
+const userEmailRepository: Repository<UserEmail> = AppDataSource.getRepository(UserEmail);
+const userPhoneRepository: Repository<UserPhone> = AppDataSource.getRepository(UserPhone);
+const contactEmailRepository: Repository<ContactEmail> = AppDataSource.getRepository(ContactEmail);
+const contactPhoneRepository: Repository<ContactPhone> = AppDataSource.getRepository(ContactPhone);
 
 export {
     AppDataSource,
-    // userRepository, contactRepository, userEmailRepository, 
-    // userPhoneRepository, contactEmailRepository, contactPhoneRepository
+    userRepository, contactRepository, userEmailRepository,
+    userPhoneRepository, contactEmailRepository, contactPhoneRepository
 };
