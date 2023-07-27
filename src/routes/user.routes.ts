@@ -10,3 +10,7 @@ export const userRoutes: Router = Router();
 userRoutes.post('', ensureBodyMiddleware(userSchemaRequest), userMiddlewares.ensureUniqueEmail,
     userMiddlewares.ensureUniquePhone, userMiddlewares.ensureUniqueFullName,
     userMiddlewares.ensureUniqueUsername, userControllers.create);
+
+userRoutes.get('', userControllers.getAll);
+
+userRoutes.get('/:id', userControllers.getUser);

@@ -27,8 +27,14 @@ export class User {
     @Column({ type: 'boolean', default: false })
     isAdmin: boolean;
 
+    @Column({ type: 'boolean', default: true })
+    isActive: boolean;
+
     @Column({ type: 'date' })
     registerDate: string | Date;
+
+    @Column({ type: 'date', nullable: true })
+    deletedAt: string | Date;
 
     @BeforeInsert()
     insertRegisterDate(): void {

@@ -1,11 +1,11 @@
-import { Request, Response } from "express";
-import { tUserRequest } from "../../interfaces/user.interfaces";
+import { tUserCreateResponse, tUserRequest, tUserResponse, tUsersResponse } from "../../interfaces/user.interfaces";
 import { userEmailRepository, userPhoneRepository, userRepository } from "../../data-source";
 import { User } from "../../entities/user.entity";
 import { UserPhone } from "../../entities/userPhone.entity";
 import { UserEmail } from "../../entities/userEmail.entity";
+import { userCreateSchemaResponse, userSchemaResponse, usersSchemaResponse } from "../../schemas/user.schemas";
 
-const create = async (data: tUserRequest): Promise<User> => {
+const create = async (data: tUserRequest): Promise<tUserCreateResponse> => {
 
     const newUser: User = userRepository.create({
         full_name: data.full_name,
@@ -27,7 +27,22 @@ const create = async (data: tUserRequest): Promise<User> => {
         await userPhoneRepository.save(newPhone);
     });
 
-    return newUser;
+    return userCreateSchemaResponse.parse(newUser);
 };
 
-export { create }
+const getAll = async (): Promise<tUsersResponse> => {
+
+    const allUsers: User[] = await userRepository.find({ relations: { phones: true, emails: true } });
+
+    return usersSchemaResponse.parse(allUsers)
+};
+
+const getUser = async (userId: string): Promise<tUserResponse> => {
+
+    const userData = await userRepository.findOne({ where: { id: userId }, relations: { phones: true, emails: true } });
+
+    return userSchemaResponse.parse(userData)
+};
+
+
+export { create, getAll, getUser }

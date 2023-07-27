@@ -1,5 +1,7 @@
-import { create } from './user.controllers';
+import { create, getAll, getUser } from './user.controllers';
 
 export default {
-    create
+    create,
+    getAll,
+    getUser
 };

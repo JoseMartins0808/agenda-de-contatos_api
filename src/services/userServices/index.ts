@@ -1,5 +1,7 @@
-import { create } from './user.service';
+import { create, getAll, getUser } from './user.service';
 
 export default {
-    create
+    create,
+    getAll,
+    getUser
 };
