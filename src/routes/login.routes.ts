@@ -2,9 +2,9 @@ import { Router } from "express";
 import { ensureBodyMiddleware } from "../middlewares/ensureBody.middleware";
 import { loginSchemaRequest } from "../schemas/login.schemas";
 import loginControllers from "../controllers/loginControllers";
-import loginMiddlewares from "../middlewares/loginMiddlewares";
+import authenticationMiddlewares from "../middlewares/authenticationMiddlewares";
 
 export const loginRoutes: Router = Router();
 
-loginRoutes.post('', ensureBodyMiddleware(loginSchemaRequest), loginMiddlewares.verifyIsActive,
+loginRoutes.post('', ensureBodyMiddleware(loginSchemaRequest), authenticationMiddlewares.verifyIsActive,
     loginControllers.createToken);

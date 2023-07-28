@@ -1,5 +1,9 @@
-import { ensureUniqueEmail, ensureUniqueFullName, ensureUniquePhone, ensureUniqueUsername } from './user.middlewares';
+import {
+    ensureUniqueEmail, ensureUniqueFullName, ensureUniquePhone, ensureUniqueUsername,
+    verifyUserExistsById, verifyUserIsActive
+} from './user.middlewares';
 
 export default {
-    ensureUniqueEmail, ensureUniqueFullName, ensureUniquePhone, ensureUniqueUsername
+    ensureUniqueEmail, ensureUniqueFullName, ensureUniquePhone, ensureUniqueUsername,
+    verifyUserExistsById, verifyUserIsActive
 }

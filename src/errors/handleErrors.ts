@@ -1,4 +1,5 @@
 import { NextFunction, Request, Response } from "express";
+import { EntityNotFoundError, QueryFailedError } from "typeorm";
 import { ZodError } from 'zod';
 
 
@@ -18,10 +19,18 @@ function handleErrors(error: Error, request: Request, response: Response, next: 
     };
 
     if (error instanceof ZodError) {
-        console.log('EEEROOOOO' + error)
-        return response.status(400).json({ message: error.flatten().fieldErrors })
+        return response.status(400).json({ message: error.flatten().fieldErrors });
     };
 
+    if (error instanceof EntityNotFoundError) {
+        return response.status(400).json({ message: 'User not found' });
+    };
+
+    if (error instanceof QueryFailedError) {
+        return response.status(400).json({ message: 'Invalid user uuid sintax' });
+    }
+
+    console.log(error);
 
     return response.status(500).json({ message: "Internal server error" });
 };

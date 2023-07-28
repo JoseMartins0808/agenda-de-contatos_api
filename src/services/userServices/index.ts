@@ -1,7 +1,10 @@
-import { create, getAll, getUser } from './user.service';
+import { create, getAll, getUser, update, softDelete, reactivate } from './user.service';
 
 export default {
     create,
     getAll,
-    getUser
+    getUser,
+    update,
+    softDelete,
+    reactivate
 };

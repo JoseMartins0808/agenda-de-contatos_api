@@ -53,4 +53,24 @@ async function ensureUniqueUsername(request: Request, response: Response, next: 
     return next();
 };
 
-export { ensureUniqueEmail, ensureUniqueFullName, ensureUniquePhone, ensureUniqueUsername }
+async function verifyUserExistsById(request: Request, response: Response, next: NextFunction): Promise<void> {
+
+    const userId: string = request.params.userId;
+
+    const userFound: User | null = await userRepository.findOneOrFail({ where: { id: userId } });
+
+    if (!userFound) throw new AppError('User not found', 400);
+
+    response.locals.userFound = userFound;
+
+    next();
+};
+
+async function verifyUserIsActive(request: Request, response: Response, next: NextFunction): Promise<void> {
+
+    if (response.locals.userFound.isActive) throw new AppError('User is already active')
+
+    return next();
+};
+
+export { ensureUniqueEmail, ensureUniqueFullName, ensureUniquePhone, ensureUniqueUsername, verifyUserExistsById, verifyUserIsActive }

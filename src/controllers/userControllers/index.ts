@@ -1,7 +1,10 @@
-import { create, getAll, getUser } from './user.controllers';
+import { create, getAll, getUser, updateUser, softDelete, reactivateUser } from './user.controllers';
 
 export default {
     create,
     getAll,
-    getUser
+    getUser,
+    updateUser,
+    softDelete,
+    reactivateUser
 };
