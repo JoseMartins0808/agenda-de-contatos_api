@@ -1,7 +1,8 @@
-import { verifyIsActive, verifyIsAdmin, verifyIsAdminOrOwner } from './authentication.middlewares';
+import { verifyIsActiveForLogin, verifyIsAdmin, verifyIsAdminOrOwner, verifyIsActiveByToken } from './authentication.middlewares';
 
 export default {
-    verifyIsActive,
+    verifyIsActiveForLogin,
     verifyIsAdmin,
-    verifyIsAdminOrOwner
+    verifyIsAdminOrOwner,
+    verifyIsActiveByToken
 };

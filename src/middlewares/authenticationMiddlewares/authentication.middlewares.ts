@@ -5,7 +5,7 @@ import { User } from "../../entities/user.entity";
 import { verify } from 'jsonwebtoken';
 import 'dotenv/config';
 
-async function verifyIsActive(request: Request, response: Response, next: NextFunction): Promise<void> {
+async function verifyIsActiveForLogin(request: Request, response: Response, next: NextFunction): Promise<void> {
 
     const userFound: User | null = await userRepository.findOne({ where: { username: request.body.username } });
 
@@ -16,6 +16,27 @@ async function verifyIsActive(request: Request, response: Response, next: NextFu
     response.locals.userFound = userFound;
 
     return next();
+};
+
+async function verifyIsActiveByToken(request: Request, response: Response, next: NextFunction): Promise<void> {
+
+    const authorization: string | undefined = request.headers.authorization;
+
+    if (!authorization) throw new AppError('Missing bearer token', 401);
+
+    const token: string = authorization.split(' ')[1];
+
+    verify(token, process.env.SECRET_KEY!, (error: any, decoded: any) => {
+
+        if (error) throw new AppError(error.message, 401);
+
+        if (!decoded.isActive) throw new AppError('User deactivated', 401);
+
+        response.locals.userId = decoded.sub;
+
+    });
+
+    next();
 };
 
 async function verifyIsAdmin(request: Request, response: Response, next: NextFunction): Promise<void> {
@@ -45,7 +66,7 @@ async function verifyIsAdminOrOwner(request: Request, response: Response, next: 
 
     const token = authorization.split(' ')[1];
 
-    verify(token, process.env.SECRET_KEY!, (error: any, decoded: any) => {
+    verify(token, process.env.SECRET_KEY!, async (error: any, decoded: any) => {
 
         if (error) throw new AppError(error.message, 401);
 
@@ -53,8 +74,12 @@ async function verifyIsAdminOrOwner(request: Request, response: Response, next: 
             throw new AppError('Insufficient permission');
     });
 
-
     return next();
 };
 
-export { verifyIsActive, verifyIsAdmin, verifyIsAdminOrOwner };
+export {
+    verifyIsActiveForLogin,
+    verifyIsAdmin,
+    verifyIsAdminOrOwner,
+    verifyIsActiveByToken
+};

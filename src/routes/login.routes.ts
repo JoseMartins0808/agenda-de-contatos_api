@@ -6,5 +6,5 @@ import authenticationMiddlewares from "../middlewares/authenticationMiddlewares"
 
 export const loginRoutes: Router = Router();
 
-loginRoutes.post('', ensureBodyMiddleware(loginSchemaRequest), authenticationMiddlewares.verifyIsActive,
+loginRoutes.post('', ensureBodyMiddleware(loginSchemaRequest), authenticationMiddlewares.verifyIsActiveForLogin,
     loginControllers.createToken);

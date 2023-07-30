@@ -27,6 +27,7 @@ function handleErrors(error: Error, request: Request, response: Response, next: 
     };
 
     if (error instanceof QueryFailedError) {
+        console.log(error)
         return response.status(400).json({ message: 'Invalid user uuid sintax' });
     }
 

@@ -2,6 +2,7 @@ import { BeforeInsert, BeforeUpdate, Column, Entity, OneToMany, PrimaryGenerated
 import { UserEmail } from './userEmail.entity';
 import { UserPhone } from './userPhone.entity';
 import { getRounds, hashSync } from 'bcryptjs';
+import { Contact } from './contact.entity';
 
 @Entity('users')
 export class User {
@@ -29,6 +30,9 @@ export class User {
 
     @Column({ type: 'boolean', default: true })
     isActive: boolean;
+
+    @OneToMany(() => Contact, contact => contact.user)
+    contacts: Contact[];
 
     @Column({ type: 'date' })
     registerDate: string | Date;

@@ -16,7 +16,7 @@ const createToken = async (loginData: tLoginRequest, response: Response) => {
 
     const newToken: string = sign({
         isActive: user.isActive,
-        isAdmin: user.isAdmin
+        isAdmin: user.isAdmin,
     }, process.env.SECRET_KEY!, {
         expiresIn: '24h',
         subject: user.id

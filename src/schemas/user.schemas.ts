@@ -30,7 +30,7 @@ const userSchemaResponse = z.object({
     registerDate: z.string(),
     deletedAt: z.string().nullable(),
     emails: z.object({ email: z.string() }).array(),
-    phones: z.object({ phone: z.string() }).array()
+    phones: z.object({ phone: z.string() }).array(),
 });
 
 const usersSchemaResponse = userSchemaResponse.array();

@@ -11,6 +11,6 @@ export class ContactPhone {
     @Column({ type: 'varchar', length: 11 })
     phone: string;
 
-    @ManyToOne(() => Contact)
+    @ManyToOne(() => Contact, { onDelete: 'CASCADE' })
     contact: Contact;
 };
