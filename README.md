@@ -348,7 +348,6 @@ Rota **autenticada** com o token do usuário, que listará os seus contatos. **N
 | Status code: <b style="color:green">201 CREATED</b> |
 
 ```json
-{
 [
 	{
 		"id": "acf88147-38af-4031-91b9-1af5ffe1a17a",
@@ -376,7 +375,6 @@ Rota **autenticada** com o token do usuário, que listará os seus contatos. **N
 		]
 	}
 ]
-}
 ```
 
 ## Rota DELETE/contacts/:contactId
