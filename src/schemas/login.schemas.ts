@@ -5,4 +5,13 @@ const loginSchemaRequest = z.object({
     password: z.string()
 });
 
-export { loginSchemaRequest };
+const loginSchemaResponse = z.object({
+    id: z.string(),
+    full_name: z.string(),
+    username: z.string(),
+    isAdmin: z.boolean(),
+    isActive: z.boolean(),
+    registerDate: z.string(),
+});
+
+export { loginSchemaRequest, loginSchemaResponse };

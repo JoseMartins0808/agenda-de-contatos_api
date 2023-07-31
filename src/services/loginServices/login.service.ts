@@ -5,6 +5,8 @@ import { AppError } from "../../errors/handleErrors";
 import { sign } from 'jsonwebtoken';
 import { Response } from "express";
 import 'dotenv/config';
+import { userSchemaResponse } from "../../schemas/user.schemas";
+import { loginSchemaResponse } from "../../schemas/login.schemas";
 
 const createToken = async (loginData: tLoginRequest, response: Response) => {
 
@@ -22,7 +24,9 @@ const createToken = async (loginData: tLoginRequest, response: Response) => {
         subject: user.id
     });
 
-    return newToken;
+    const userResponse = loginSchemaResponse.parse(user);
+
+    return { token: newToken, user: userResponse };
 };
 
 export { createToken }

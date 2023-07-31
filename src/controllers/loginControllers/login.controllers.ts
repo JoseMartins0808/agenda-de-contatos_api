@@ -6,7 +6,7 @@ async function createToken(request: Request, response: Response): Promise<Respon
 
     const token = await loginServices.createToken(request.body, response);
 
-    return response.status(200).json({ token: token });
+    return response.status(200).json(token);
 };
 
 export { createToken };
