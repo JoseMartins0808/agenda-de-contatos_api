@@ -12,5 +12,5 @@ export class ContactPhone {
     phone: string;
 
     @ManyToOne(() => Contact, { onDelete: 'CASCADE' })
-    contact: Contact;
+    contact?: Contact;
 };

@@ -19,6 +19,7 @@ function handleErrors(error: Error, request: Request, response: Response, next: 
     };
 
     if (error instanceof ZodError) {
+        console.log(error)
         return response.status(400).json({ message: error.flatten().fieldErrors });
     };
 
@@ -27,12 +28,10 @@ function handleErrors(error: Error, request: Request, response: Response, next: 
     };
 
     if (error instanceof QueryFailedError) {
-        console.log(error)
         return response.status(400).json({ message: 'Invalid user uuid sintax' });
     }
 
     console.log(error);
-
     return response.status(500).json({ message: "Internal server error" });
 };
 

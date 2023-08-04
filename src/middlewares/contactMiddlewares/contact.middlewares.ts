@@ -46,8 +46,6 @@ async function verifyIsOwner(request: Request, response: Response, next: NextFun
 
     const userId: string = response.locals.userId;
 
-    console.log(userId);
-
     const contactFound: Contact | null = await contactRepository.findOne({ where: { id: request.params.contactId }, relations: { user: true } });
 
     if (!contactFound) throw new AppError('Contact not found', 409);

@@ -13,7 +13,13 @@ const contactSchemaRequest = contactSchema.omit({
     registerDate: true
 });
 
-const contactSchemaResponse = contactSchema.omit({ phones: true, emails: true, user: true });
+const contactSchemaResponse = z.object({
+    id: z.string(),
+    full_name: z.string(),
+    phones: z.object({ phone: z.string() }).array(),
+    emails: z.object({ email: z.string() }).array(),
+    registerDate: z.string()
+});
 
 const contactsSchemaResponse = contactSchema.array();
 

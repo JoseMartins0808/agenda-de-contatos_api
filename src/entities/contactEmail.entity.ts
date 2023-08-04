@@ -11,5 +11,5 @@ export class ContactEmail {
     email: string;
 
     @ManyToOne(() => Contact, { onDelete: 'CASCADE' })
-    contact: Contact;
+    contact?: Contact;
 };

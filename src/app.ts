@@ -1,6 +1,6 @@
 import express from 'express';
-import 'reflect-metadata';
 import 'express-async-errors';
+import 'reflect-metadata';
 import { userRoutes } from './routes/user.routes';
 import { handleErrors } from './errors/handleErrors';
 import { loginRoutes } from './routes/login.routes';
@@ -16,4 +16,3 @@ application.use('/login', loginRoutes);
 application.use('/contacts', contatcRoutes);
 
 application.use(handleErrors);
-
