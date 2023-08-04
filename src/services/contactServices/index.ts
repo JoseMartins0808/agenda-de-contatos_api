@@ -1,7 +1,8 @@
-import { create, getAll, remove } from './contact.service';
+import { create, getAll, remove, update } from './contact.service';
 
 export default {
     create,
     getAll,
-    remove
+    remove,
+    update
 };

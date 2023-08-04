@@ -52,6 +52,50 @@ const create = async (payload: any, response: Response) => {
     return contactSchemaResponse.parse(newContact);
 };
 
+const update = async (data: any, response: Response) => {
+
+    const oldData: Contact = response.locals.contact;
+    let phonesArray: ContactPhone[] = [];
+    let emailsArray: ContactEmail[] = [];
+
+    for (let index = 0; index < data.phones.length; index++) {
+        const phoneFound = await contactPhoneRepository.findOne({ where: { phone: data.phones[index] }, relations: { contact: true } });
+
+        if (!phoneFound) {
+            const newPhone = contactPhoneRepository.create({ phone: data.phones[index] });
+            const savePhone = await contactPhoneRepository.save(newPhone);
+            phonesArray.push(savePhone);
+
+        } else {
+            phonesArray.push(phoneFound);
+        };
+    };
+
+    for (let index = 0; index < data.emails.length; index++) {
+        const emailFound = await contactEmailRepository.findOne({ where: { email: data.emails[index] }, relations: { contact: true } });
+
+        if (!emailFound) {
+            const newEmail = contactEmailRepository.create({ email: data.emails[index] });
+            const saveEmail = await contactEmailRepository.save(newEmail);
+            emailsArray.push(saveEmail);
+
+        } else {
+            emailsArray.push(emailFound);
+        };
+    };
+
+    const newContactData = contactRepository.create({
+        ...oldData,
+        ...data,
+        phones: phonesArray,
+        emails: emailsArray
+    });
+
+    const updateContact = await contactRepository.save(newContactData);
+
+    return updateContact;
+}
+
 const getAll = async (userId: string) => {
 
     const contacts = await contactRepository.find({ where: { user: { id: userId } }, relations: { phones: true, emails: true }, order: { full_name: 'asc' } })
@@ -67,4 +111,4 @@ const remove = async (contactId: string) => {
 
 };
 
-export { create, getAll, remove };
+export { create, getAll, remove, update };

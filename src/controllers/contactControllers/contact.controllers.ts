@@ -15,6 +15,13 @@ async function getAll(request: Request, response: Response): Promise<Response> {
     return response.status(200).json(allContacts);
 };
 
+async function update(request: Request, response: Response): Promise<Response> {
+
+    const updateContact = await contactServices.update(request.body, response);
+
+    return response.status(200).json(updateContact);
+};
+
 async function remove(request: Request, response: Response): Promise<Response> {
 
     await contactServices.remove(request.params.contactId);
@@ -22,4 +29,4 @@ async function remove(request: Request, response: Response): Promise<Response> {
     return response.status(204).send();
 };
 
-export { create, getAll, remove };
+export { create, getAll, remove, update };

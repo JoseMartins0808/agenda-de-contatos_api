@@ -55,4 +55,15 @@ async function verifyIsOwner(request: Request, response: Response, next: NextFun
     next();
 };
 
-export { ensureUniqueEmail, ensureUniqueFullName, ensureUniquePhone, verifyIsOwner };
+async function verifyExists(request: Request, response: Response, next: NextFunction): Promise<void | Response> {
+
+    const contactFound = await contactRepository.findOne({ where: { id: request.params.contactId } });
+
+    if (!contactFound) return response.status(400).json({ message: 'Contact not found' });
+
+    response.locals.contact = contactFound;
+
+    return next();
+};
+
+export { ensureUniqueEmail, ensureUniqueFullName, ensureUniquePhone, verifyIsOwner, verifyExists };

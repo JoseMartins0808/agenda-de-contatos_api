@@ -13,6 +13,8 @@ const contactSchemaRequest = contactSchema.omit({
     registerDate: true
 });
 
+const updateContactSchema = contactSchemaRequest.partial();
+
 const contactSchemaResponse = z.object({
     id: z.string(),
     full_name: z.string(),
@@ -23,4 +25,4 @@ const contactSchemaResponse = z.object({
 
 const contactsSchemaResponse = contactSchema.array();
 
-export { contactSchema, contactSchemaRequest, contactsSchemaResponse, contactSchemaResponse };
+export { contactSchema, contactSchemaRequest, contactsSchemaResponse, contactSchemaResponse, updateContactSchema };

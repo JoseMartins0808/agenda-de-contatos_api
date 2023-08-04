@@ -1,7 +1,8 @@
-import { create, getAll, remove } from './contact.controllers';
+import { create, getAll, remove, update } from './contact.controllers';
 
 export default {
     create,
     getAll,
-    remove
+    remove,
+    update
 };
