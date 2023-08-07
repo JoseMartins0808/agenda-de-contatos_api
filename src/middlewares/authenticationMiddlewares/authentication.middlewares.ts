@@ -28,7 +28,7 @@ async function verifyIsActiveByToken(request: Request, response: Response, next:
 
     verify(token, process.env.SECRET_KEY!, (error: any, decoded: any) => {
 
-        if (error) return response.status(401).json(error.message);
+        if (error) return response.status(401).json({ message: error.message });
         // throw new AppError(error.message, 401);
 
         if (!decoded.isActive) return response.status(403).json('Insufficient permission');
@@ -52,7 +52,7 @@ async function verifyIsAdmin(request: Request, response: Response, next: NextFun
 
     verify(token, process.env.SECRET_KEY!, (error: any, decoded: any) => {
 
-        if (error) return response.status(401).json(error.message);
+        if (error) return response.status(401).json({ message: error.message });
         // throw new AppError(error.message, 401);
 
         if (!decoded.isAdmin) return response.status(403).json('Insufficient permission');
@@ -74,7 +74,7 @@ async function verifyIsAdminOrOwner(request: Request, response: Response, next: 
 
     verify(token, process.env.SECRET_KEY!, async (error: any, decoded: any) => {
 
-        if (error) return response.status(401).json(error.message);
+        if (error) return response.status(401).json({ message: error.message });
         // throw new AppError(error.message, 401);
 
         if (!decoded.isAdmin && (response.locals.userFound.id !== decoded.sub))

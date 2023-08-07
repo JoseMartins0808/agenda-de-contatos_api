@@ -1,7 +1,35 @@
 # agenda-de-contatos_api
 Api restfull de uma aplicação web que gerencia uma agenda de contatos.
 
+# Instruções para rodar localmente o servidor da API:
+Após clonar o repositório, necessário instalar as dependências pelo comando no terminal:
+ - npm install
+ **ou**
+ -yarn
+
+Após instalar as dependências, criar um banco de dados postgres, e criar um arquivo **.env**, da forma apresentada pelo arquivo **.env.example**,
+onde **user** é o usuário do postgres,
+**password** é a senha para o usuário postgres,
+**host** é o local da hospedagem do servidor, no caso do servidor local, **localhost**,
+**port** é a porta para o banco de dados, que por padrão, é **5432**,
+**db** é o nome do banco de dados criado para a api rodar localmente.
+ -arquivo **.env**:
+ ```json
+ DATABASE_URL="postgres://user:password@host:port/db"
+ SECRET_KEY="chave secreta"
+ 
+ ```
+
+Após criar o BD e o arquivo .env, precisa realizar as migrações do typeorm, para que se gere as tabelas necessárias para a API, pelo comando:
+ - npm run typeorm migration:run -- -d src/data-source.ts
+
+Após instalar as dependências, iniciar o servidor pelo comando:
+ - npm run dev
+ **ou**
+ - yarn dev
+
 # Observação:
+
 Por segurança, não há rota de criação de administrador. O administrador deve ser criado após a criação do usuário comum, pelo comando sql:
  - UPDATE users SET "isAdmin" = 'true' WHERE id = '<Id do usuário a se administrador>'; 
 
@@ -18,6 +46,7 @@ Por segurança, não há rota de criação de administrador. O administrador dev
 | POST    | /users/:userId       | Reativa um usuário                 |
 | POST    | /contacts            | Cadastra um novo contato           |
 | GET     | /contacts            | Lista todos os contatos do usuário |
+| PATCH   | /contacts/:contactId | Atualiza dados de um contato       |
 | DELETE  | /contacts/:contactId | Deleta um contato do usuário       |
 
 
@@ -375,6 +404,51 @@ Rota **autenticada** com o token do usuário, que listará os seus contatos. **N
 		]
 	}
 ]
+```
+
+## Rota PATCH/contacts/:contactId
+
+Rota **autenticada** com o token do uau´srio que irá atualizar seu contato. Recebe corpo de requisição conforme abaixo, podendo reduzir os parâmetros a serem atualizados ao cadastro de contato.
+
+| Dados de Envio:    |
+| ------------------ |
+| Body: Formato Json |
+
+```json
+{
+	"full_name": "Contact Updated",
+	"phones": ["88999999999","77999999999"],
+	"emails": ["updatedcontact@mail.com"]
+}
+```
+
+| Resposta do servidor:                               |
+| --------------------------------------------------- |
+| Body: Formato Json                                  |
+| Status code: <b style="color:green">200 OK</b>      |
+
+```json
+{
+	"id": "e36ce658-8184-4aad-a63b-28045114c1aa",
+	"full_name": "Contact Updated",
+	"registerDate": "29/07/2023",
+	"emails": [
+		{
+		"id": 3,
+		"email": "updatedcontact@mail.com"
+		}
+	],
+	"phones": [
+		{
+			"id": 4,
+			"phone": "88999999999"
+		},
+		{
+			"id": 5,
+			"phone": "77999999999"
+		}
+	]
+}
 ```
 
 ## Rota DELETE/contacts/:contactId
