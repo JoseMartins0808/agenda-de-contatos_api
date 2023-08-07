@@ -3,17 +3,18 @@ Api restfull de uma aplicação web que gerencia uma agenda de contatos.
 
 # Instruções para rodar localmente o servidor da API:
 Após clonar o repositório, necessário instalar as dependências pelo comando no terminal:
- - npm install
+ - npm install <br>
  **ou**
- -yarn
+ - yarn
 
-Após instalar as dependências, criar um banco de dados postgres, e criar um arquivo **.env**, da forma apresentada pelo arquivo **.env.example**,
-onde **user** é o usuário do postgres,
-**password** é a senha para o usuário postgres,
-**host** é o local da hospedagem do servidor, no caso do servidor local, **localhost**,
-**port** é a porta para o banco de dados, que por padrão, é **5432**,
-**db** é o nome do banco de dados criado para a api rodar localmente.
- -arquivo **.env**:
+Após instalar as dependências, criar um banco de dados postgres, e criar um arquivo **.env**, da forma apresentada pelo arquivo **.env.example**, <br>
+onde **user** é o usuário do postgres, <br>
+**password** é a senha para o usuário postgres, <br>
+**host** é o local da hospedagem do servidor, no caso do servidor local, **localhost**, <br>
+**port** é a porta para o banco de dados, que por padrão, é **5432**, <br>
+**db** é o nome do banco de dados criado para a api rodar localmente. <br>
+**chave secreta** é uma chave aleatória necessária para execução de códigos de validação e criação de token. <br>
+ - arquivo **.env**:
  ```json
  DATABASE_URL="postgres://user:password@host:port/db"
  SECRET_KEY="chave secreta"
@@ -24,14 +25,14 @@ Após criar o BD e o arquivo .env, precisa realizar as migrações do typeorm, p
  - npm run typeorm migration:run -- -d src/data-source.ts
 
 Após instalar as dependências, iniciar o servidor pelo comando:
- - npm run dev
+ - npm run dev <br>
  **ou**
  - yarn dev
 
 # Observação:
 
 Por segurança, não há rota de criação de administrador. O administrador deve ser criado após a criação do usuário comum, pelo comando sql:
- - UPDATE users SET "isAdmin" = 'true' WHERE id = '<Id do usuário a se administrador>'; 
+ - UPDATE users SET "isAdmin" = 'true' WHERE id = '<Id do usuário a ser administrador>'; 
 
 # Endpoints
 
